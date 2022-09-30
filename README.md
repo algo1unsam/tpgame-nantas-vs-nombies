@@ -1,10 +1,10 @@
-# Nombre del juego (<- borrar y completar)
+# niantas vs niombies
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Rodriguez Micaela
+- Pagano Annabella
+- Gibelli Julian
 
 ## Capturas
 

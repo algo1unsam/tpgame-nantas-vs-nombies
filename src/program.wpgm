@@ -1,0 +1,9 @@
+import wollok.game.*
+import juego.* 
+
+program niamplasVsNiombies {
+
+	juegoMenu.configurar()
+	game.start()
+}
+ 
