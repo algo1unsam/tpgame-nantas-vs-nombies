@@ -13,10 +13,11 @@
 ## Reglas de Juego / Instrucciones
 
 (Escribirlas)
-
+probando 1,2,3
 
 ## Otros
 
 - Curso/Facultad
 - Versión de wollok
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+
