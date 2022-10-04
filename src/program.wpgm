@@ -1,12 +1,8 @@
 import wollok.game.*
 import juego.* 
 
-
-//agrego comentario random
-
 program niamplasVsNiombies {
 
 	juegoMenu.configurar()
 	game.start()
 }
- 
