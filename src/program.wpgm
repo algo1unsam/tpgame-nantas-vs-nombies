@@ -1,5 +1,5 @@
 import wollok.game.*
-import juego.* 
+import menu.* 
 
 program niamplasVsNiombies {
 	game.width(64)
