@@ -13,7 +13,7 @@
 ## Reglas de Juego / Instrucciones
 
 (Escribirlas)
-probando 1,2,3
+
 
 ## Otros
 
@@ -21,3 +21,4 @@ probando 1,2,3
 - Versión de wollok
 - Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
 
+##probando hacer merge desde la terminal 
