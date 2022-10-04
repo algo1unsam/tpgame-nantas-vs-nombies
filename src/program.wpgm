@@ -1,8 +1,16 @@
+
 import wollok.game.*
 import juego.* 
 
 program niamplasVsNiombies {
-
-	juegoMenu.configurar()
+	game.width(64)
+	game.height(36)
+	game.cellSize(20)
+	game.title("Niantas vs niombies")
+	
+	juegoMenu.empezar()
+	
 	game.start()
 }
+ 
+
