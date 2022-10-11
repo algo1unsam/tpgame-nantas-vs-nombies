@@ -3,13 +3,12 @@ import wollok.game.*
 import menu.* 
 
 program niamplasVsNiombies {
-	//El juego tiene un tamaño de 1440x792
-	game.width(20)
-	game.height(11)
-	game.cellSize(72)
+	//El juego tiene un tamaño de 1440x880
+	game.width(14)
+	game.height(8)
+	game.cellSize(110)
 	game.title("Niantas vs niombies")
 	
 	juegoMenu.empezar()
 	game.start()
 }
- 
