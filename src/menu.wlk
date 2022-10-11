@@ -4,10 +4,8 @@ object juegoMenu{
 	const property opciones=[juego,instrucciones,creditos]
 	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
 	
-	
-	
-	
 	method empezar(){
+		
 		game.boardGround("assets/menu.png")
 		game.addVisual(flecha)
 		keyboard.up().onPressDo{flecha.subir()}
