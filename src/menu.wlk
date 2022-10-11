@@ -7,23 +7,19 @@ object juegoMenu{
 	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
 	const musicaOpciones=game.sound("musica/mainGame.mp3")
 	
-	method empezar(){
+	method configurar(){
 		game.boardGround("assets/menu.png") 
 		game.addVisual(flecha)
-		game.addVisual(instrucciones)
-		game.addVisual(creditos)
-		game.addVisual(juego)
-		game.addVisual(papita) 
-		//agrega todo pero "escondido"
-		
 		keyboard.up().onPressDo{flecha.subir()}
 		keyboard.down().onPressDo{flecha.bajar()}
 		keyboard.enter().onPressDo{self.cambiar(flecha.opcion())} 
 		//abre la opcion del menu en el que está parada la flecha
-		
+	}
+	
+	method empezar(){
+		self.configurar()
 		musicaMenu.shouldLoop(true)
 		game.schedule(500, { musicaMenu.play()})
-		
 		game.schedule(0, { musicaOpciones.play() 
 							musicaOpciones.pause()})
 		//empieza y pausa la musica de las opciones para poder usar resume
@@ -33,23 +29,25 @@ object juegoMenu{
 		game.sound("musica/selection.mp3").play() 
 		const opcion=self.opciones().get(numero) 
 		//la opcion a la que cambio es  la posicion numero de opciones
-		game.removeVisual(flecha)
+		game.clear()
+		game.addVisual(opcion)
 		musicaMenu.pause()
 		
 		musicaOpciones.resume()
 		opcion.iniciar() 
 		//aparece la imagen o empieza el juego
 		
-		keyboard.a().onPressDo{=>self.volverAlMenu(numero)
-								 musicaOpciones.pause()
-		} //apretar 'a' para volver al menu, pausa la musica
+		keyboard.shift().onPressDo{=>self.volverAlMenu(numero)
+								 	musicaOpciones.pause()
+		} //apretar 'shift' para volver al menu, pausa la musica
 	}
 	
 	method volverAlMenu(numero){
 		const opcion=self.opciones().get(numero)
 		opcion.parar()
+		game.clear()
+		self.configurar() //vuelve a poner la flecha y las configuraciones de teclas
 		game.sound("musica/selection.mp3").play()
-		game.addVisual(flecha)
 		musicaMenu.resume()
 	}
 }

@@ -8,8 +8,9 @@ object juego inherits OpcionesMenu {
 	
 	override method iniciar(){
 		super()
-		//agregar algun cartel que diga "precione z para iniciar" o algo asi
-		keyboard.z().onPressDo{self.empezarJuego()} 
+		game.addVisual(papita)
+		keyboard.enter().onPressDo{self.empezarJuego()} 
+		//agregar algun cartel que diga "precione enter para iniciar" o algo asi
 	}
 	override method parar(){
 		super()
