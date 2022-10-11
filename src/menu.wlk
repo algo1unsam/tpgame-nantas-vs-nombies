@@ -1,3 +1,4 @@
+
 import wollok.game.*
 
 object juegoMenu{
