@@ -5,10 +5,8 @@ import menu.* //para la clase OpcionesMenu
 object juego inherits OpcionesMenu {
 
 	method image()="assets/fondoJuego.png"
-	
 	override method iniciar(){
 		super()
-		game.addVisual(papita)
 		keyboard.enter().onPressDo{self.empezarJuego()} 
 		//agregar algun cartel que diga "precione enter para iniciar" o algo asi
 	}
@@ -17,8 +15,14 @@ object juego inherits OpcionesMenu {
 		papita.desaparecer()
 	} 
 	method empezarJuego(){
+		game.clear()
+		position=game.origin()
+		game.addVisual(self)
+		//por si aprietan enter mientras juegan
+		game.addVisual(papita)
 		papita.aparecer()
 		keyboard.space().onPressDo{papita.rodar()} 
 		//cuando se aprieta espacio la papita deja de subir y empieza a rodar
+		keyboard.shift().onPressDo{=>juegoMenu.volverAlMenu(0)}
 	}
 }

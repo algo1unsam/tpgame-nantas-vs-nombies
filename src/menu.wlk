@@ -19,26 +19,26 @@ object juegoMenu{
 	method empezar(){
 		self.configurar()
 		musicaMenu.shouldLoop(true)
-		game.schedule(500, { musicaMenu.play()})
-		game.schedule(0, { musicaOpciones.play() 
-							musicaOpciones.pause()})
+//		game.schedule(500, { musicaMenu.play()})
+//		game.schedule(0, { musicaOpciones.play() 
+//							musicaOpciones.pause()})
 		//empieza y pausa la musica de las opciones para poder usar resume
 	}
 	
 	method cambiar(numero){
-		game.sound("musica/selection.mp3").play() 
+//		game.sound("musica/selection.mp3").play() 
 		const opcion=self.opciones().get(numero) 
 		//la opcion a la que cambio es  la posicion numero de opciones
 		game.clear()
 		game.addVisual(opcion)
-		musicaMenu.pause()
-		
-		musicaOpciones.resume()
+//		musicaMenu.pause()
+//		
+//		musicaOpciones.resume()
 		opcion.iniciar() 
 		//aparece la imagen o empieza el juego
 		
 		keyboard.shift().onPressDo{=>self.volverAlMenu(numero)
-								 	musicaOpciones.pause()
+//								 	musicaOpciones.pause()
 		} //apretar 'shift' para volver al menu, pausa la musica
 	}
 	
@@ -47,8 +47,8 @@ object juegoMenu{
 		opcion.parar()
 		game.clear()
 		self.configurar() //vuelve a poner la flecha y las configuraciones de teclas
-		game.sound("musica/selection.mp3").play()
-		musicaMenu.resume()
+//		game.sound("musica/selection.mp3").play()
+//		musicaMenu.resume()
 	}
 }
 

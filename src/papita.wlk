@@ -13,7 +13,7 @@ object papita{
 	
 	method aparecer(){
 		position = self.posicionInicial()
-		game.onTick(250,"moverPapita",{self.mover()})
+		game.onTick(150,"moverPapita",{self.mover()})
 		//cada 250 milisegundos se mueve la papita
 	}
 	
@@ -29,7 +29,7 @@ object papita{
 	}
 	method rodar(){
 		game.removeTickEvent("moverPapita") //deja de subir
-		game.onTick(150,"girarPapita",{self.girar()})
+		game.onTick(100,"girarPapita",{self.girar()})
 	}
 	
 	method girar(){
