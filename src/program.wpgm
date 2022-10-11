@@ -5,7 +5,7 @@ import menu.*
 program niamplasVsNiombies {
 	game.width(20)
 	game.height(11)
-	game.cellSize(48)
+	game.cellSize(72)
 	game.title("Niantas vs niombies")
 	
 	juegoMenu.empezar()
