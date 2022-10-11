@@ -1,3 +1,4 @@
+
 import wollok.game.*
 import menu.* 
 
@@ -12,3 +13,4 @@ program niamplasVsNiombies {
 	game.start()
 }
  
+
