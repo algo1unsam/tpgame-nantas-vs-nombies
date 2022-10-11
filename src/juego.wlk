@@ -8,8 +8,8 @@ object juego inherits OpcionesMenu {
 	
 	override method iniciar(){
 		super()
-		//agregar algun cartel que diga "precione enter para iniciar" o algo asi
-		keyboard.b().onPressDo{self.empezarJuego()} 
+		//agregar algun cartel que diga "precione z para iniciar" o algo asi
+		keyboard.z().onPressDo{self.empezarJuego()} 
 	}
 	override method parar(){
 		super()
@@ -17,5 +17,7 @@ object juego inherits OpcionesMenu {
 	} 
 	method empezarJuego(){
 		papita.aparecer()
+		keyboard.space().onPressDo{papita.rodar()} 
+		//cuando se aprieta espacio la papita deja de subir y empieza a rodar
 	}
 }
