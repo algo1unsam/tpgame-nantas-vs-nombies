@@ -38,7 +38,7 @@ object juegoMenu{
 }
 
 object flecha{
-	const posicionesY= [8,4,1]
+	const posicionesY= [2,1,0]
  	var numero=0
  	
  	method image()="assets/flecha.png"
@@ -52,7 +52,7 @@ object flecha{
 	}	
 	
 	method position(){
-		return game.at(14, posicionesY.get(numero))
+		return game.at(4, posicionesY.get(numero))
 	}
 	
 	method seleccionar(){
