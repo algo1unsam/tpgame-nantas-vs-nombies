@@ -50,3 +50,5 @@ object papita{
 		//cuando "desaparece" deja de moverse a la derecha y vuelve aparecer desde arriba
 		}
 }
+
+

@@ -80,6 +80,7 @@ object reloj {
 	}
 }
 
+
 object puntaje {
 	var puntaje = 0
 	method text() = "Puntaje: " + puntaje.toString()

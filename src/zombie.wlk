@@ -31,5 +31,4 @@ class Zombie{
 		position = self.posicionInicial()
 		puntaje.subirPuntaje(30)
 	}
-	
 	}
