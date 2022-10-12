@@ -7,14 +7,14 @@ object papita{
 	method image()="assets/papita" + numero.toString() + ".png"
 	method position() = position
 
-	method posicionInicial() = game.at(2.randomUpTo(4), game.height()+1)
+	method posicionInicial() = game.at(1.randomUpTo(4), game.height()+1)
 	//la papita aparece en un lugar random entre las celdas 2 y 4 
 	//un casillero arriba para que no se vea
 	
 	method aparecer(){
 		position = self.posicionInicial()
-		game.onTick(200,"moverPapita",{self.mover()})
-		//cada 200 milisegundos se mueve la papita
+		game.onTick(300,"moverPapita",{self.mover()})
+		//cada 300 milisegundos se mueve la papita
 	}
 	
 	method desaparecer(){
@@ -29,7 +29,7 @@ object papita{
 	}
 	method rodar(){
 		game.removeTickEvent("moverPapita") //deja de subir
-		game.onTick(100,"girarPapita",{self.girar()})
+		game.onTick(200,"girarPapita",{self.girar()})
 	}
 	method borrar(){
 		game.removeTickEvent("girarPapita")
