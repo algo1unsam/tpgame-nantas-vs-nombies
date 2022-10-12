@@ -4,8 +4,8 @@ import papita.*
 
 object juegoMenu{
 	const property opciones=[juego,instrucciones,creditos] //opciones que tiene el menu
-	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
-	const musicaOpciones=game.sound("musica/mainGame.mp3")
+//	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
+	//const musicaOpciones=game.sound("musica/mainGame.mp3")
 	
 	method configurar(){
 		game.boardGround("assets/menu.png") 
@@ -13,12 +13,13 @@ object juegoMenu{
 		keyboard.up().onPressDo{flecha.subir()}
 		keyboard.down().onPressDo{flecha.bajar()}
 		keyboard.enter().onPressDo{self.cambiar(flecha.opcion())} 
+		keyboard.backspace().onPressDo{game.stop()} 
 		//abre la opcion del menu en el que está parada la flecha
 	}
 	
 	method empezar(){
 		self.configurar()
-		musicaMenu.shouldLoop(true)
+//		musicaMenu.shouldLoop(true)
 //		game.schedule(500, { musicaMenu.play()})
 //		game.schedule(0, { musicaOpciones.play() 
 //							musicaOpciones.pause()})
@@ -67,7 +68,7 @@ object flecha{
 	}	
 	
 	method position(){
-		return game.at(4, posicionesY.get(numero))
+		return game.at(3, posicionesY.get(numero))
 	}
 	
 	method opcion()= numero
@@ -76,6 +77,7 @@ object flecha{
 
 class OpcionesMenu{
 	var position=self.posicionInicial()
+	var property image
 	method position() = position
 	method posicionInicial()=game.at(game.width(),game.height()) //para que no se vea
 	method iniciar(){		
@@ -87,10 +89,5 @@ class OpcionesMenu{
 	}
 }
 
-object instrucciones inherits OpcionesMenu{
-	method image()="assets/instrucciones.png"
-}
-
-object creditos inherits OpcionesMenu{
-	method image()="assets/creditos.png"
-}
+const instrucciones = new OpcionesMenu(image="assets/instrucciones.png")
+const creditos = new OpcionesMenu(image="assets/creditos.png")
