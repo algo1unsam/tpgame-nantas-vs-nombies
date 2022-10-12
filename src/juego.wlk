@@ -11,6 +11,7 @@ object juego{
 	method posicionInicial()=game.at(game.width(),game.height()) //para que no se vea
 	method iniciar(){
 		position=game.origin()
+		game.addVisual(reloj)
 		keyboard.enter().onPressDo{self.empezarJuego()} 
 		//agregar algun cartel que diga "precione enter para iniciar" o algo asi
 	}
@@ -25,6 +26,9 @@ object juego{
 		game.addVisual(self)
 		//por si aprietan enter mientras juegan
 		game.addVisual(papita)
+		game.addVisual(reloj)
+		game.addVisual(puntaje)
+		reloj.iniciar()
 		game.onTick(10000,"aparecerZombies",{self.crearZombies(1)})
 		papita.aparecer()
 		keyboard.space().onPressDo{papita.rodar()} 
@@ -42,5 +46,48 @@ object juego{
 			game.addVisual(nuevo)
 			nuevo.aparecer()
 		}
+	}
+	method gameOver(){
+		game.addVisual(gameOver)
+		game.removeVisual(papita)
+		reloj.detener()
+		game.removeTickEvent("aparecerZombies") //para que desaparezcan todos
+	}
+}
+
+object gameOver {
+	method position() = game.center()
+	method text() = "GAME OVER"
+	method textColor() = "#ffffff"
+}
+
+object reloj {
+	var tiempo = 0
+	
+	method text() = "Tiempo de juego: " + tiempo.toString()
+	method textColor() = "#ffffff"
+	method position() = game.at(game.width()-1, game.height()-1)
+	
+	method pasarTiempo() {
+		tiempo = tiempo +1
+	}
+	method iniciar(){
+		tiempo = 0
+		game.onTick(1000,"tiempo",{self.pasarTiempo()})
+	}
+	method detener(){
+		game.removeTickEvent("tiempo")
+	}
+}
+
+
+object puntaje {
+	var puntaje = 0
+	method text() = "Puntaje: " + puntaje.toString()
+	method textColor() = "#ffffff"
+	method position() = game.at(game.width()-1, game.height()-2)
+	
+	method subirPuntaje(cantidad) {
+		puntaje+=cantidad
 	}
 }

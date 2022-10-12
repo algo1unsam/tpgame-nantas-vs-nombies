@@ -4,8 +4,8 @@ import papita.*
 
 object juegoMenu{
 	const property opciones=[juego,instrucciones,creditos] //opciones que tiene el menu
-//	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
-	//const musicaOpciones=game.sound("musica/mainGame.mp3")
+// 	const musicaMenu=game.sound("musica/plantsVsZombiesMainMenu.mp3")
+//	const musicaOpciones=game.sound("musica/mainGame.mp3")
 	
 	method configurar(){
 		game.boardGround("assets/menu.png") 

@@ -1,5 +1,6 @@
 import wollok.game.*
 import papita.*
+import juego.*
 
 class Zombie{
 	var numero=1
@@ -21,12 +22,13 @@ class Zombie{
 		position = position.left(1) //muevo para izq un casillero
 		numero=3.min(numero+1) 
 		if (numero==3) numero=1
-		if (position.x() == 0){//perdes}
+		if (position.x() == 0){
+			juego.gameOver()
 		}
 	}
 	method morir(){
 		game.removeTickEvent("moverZombie")
 		position = self.posicionInicial()
+		puntaje.subirPuntaje(30)
 	}
-	
 	}
