@@ -1,4 +1,3 @@
-
 import wollok.game.*
 import menu.* 
 
@@ -8,8 +7,6 @@ program niamplasVsNiombies {
 	game.height(8)
 	game.cellSize(110)
 	game.title("Niantas vs niombies")
-	
 	juegoMenu.empezar()
 	game.start()
-	
 }

@@ -4,13 +4,12 @@ import juego.*
 
 class Zombie{
 	var numero=1
-	var position=self.posicionInicial()
+	var property position=self.posicionInicial()
 	
 	method image()="assets/zombie" + numero.toString() + ".png"
-	method position() = position
 
 	method posicionInicial() = game.at(game.width()+1 , 1.randomUpTo(6))
-	//aparecen en un lugar random entre las celdas 1 y 6
+	//al principio estan en un lugar random entre las celdas 1 y 6
 	//un casillero la derecha para que no se vea
 	
 	method aparecer(){
@@ -20,15 +19,23 @@ class Zombie{
 	
 	method mover(){
 		position = position.left(1) //muevo para izq un casillero
-		numero=3.min(numero+1) 
-		if (numero==3) numero=1
 		if (position.x() == 0){
-			juego.gameOver()
+			juego.gameOver() //perdes cuando un zombie recorrio todo el tablero sin morir
 		}
+		
+		numero=3.min(numero+1) //para el movimiento
+		if (numero==3) numero=1 //loop
 	}
-	method morir(){
-		game.removeTickEvent("moverZombie")
-		position = self.posicionInicial()
-		puntaje.subirPuntaje(30)
-	}
-	}
+	
+	method chocar(){
+		self.desaparecer()
+		puntaje.subirPuntaje(30)} //ganas puntos
+		
+	method chocar(contraOtroZombie){} //no hace nada
+	
+	method estaVivo()= position != self.posicionInicial() //esta vivo si está al principio
+	
+	method desaparecer(){
+		game.removeTickEvent("moverZombie") //deja de moverse
+		position = self.posicionInicial()} //desaparece
+}
