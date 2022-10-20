@@ -7,7 +7,7 @@ object juegoMenu{
 	const musicaOpciones=game.sound("musica/mainGame.mp3")
 	
 	method configurar(){
-		game.boardGround("assets/menu.png") 
+		game.boardGround("fondos/menu.png") 
 		game.addVisual(flecha)
 		keyboard.up().onPressDo{flecha.subir()}
 		keyboard.down().onPressDo{flecha.bajar()}
@@ -19,6 +19,7 @@ object juegoMenu{
 	method empezar(){
 		self.configurar()
 		musicaMenu.shouldLoop(true)
+		musicaOpciones.shouldLoop(true)
 		game.schedule(500, { musicaMenu.play()})
 		game.schedule(0, { musicaOpciones.play() 
 							musicaOpciones.pause()})//empieza y pausa la musica de las opciones para poder usar resume
@@ -51,7 +52,7 @@ object juegoMenu{
 object flecha{
  	var property numero=2
  	const property opciones=[creditos,instrucciones,juego] //opciones que tiene el menu
- 	method image()="assets/flecha.png"
+ 	method image()="fondos/flecha.png"
 	method subir(){
 		numero=2.min(numero+1)
 	}
@@ -80,5 +81,5 @@ class OpcionesMenu{
 	}
 }
 
-const instrucciones = new OpcionesMenu(image="assets/instrucciones.png")
-const creditos = new OpcionesMenu(image="assets/creditos.png")
+const instrucciones = new OpcionesMenu(image="fondos/instrucciones.png")
+const creditos = new OpcionesMenu(image="fondos/creditos.png")

@@ -9,4 +9,5 @@ program niamplasVsNiombies {
 	game.title("Niantas vs niombies")
 	juegoMenu.empezar()
 	game.start()
+	
 }

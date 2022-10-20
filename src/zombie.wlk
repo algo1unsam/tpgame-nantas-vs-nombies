@@ -5,24 +5,23 @@ import juego.*
 class Zombie{
 	var numero=1
 	var property position=self.posicionInicial()
-	
-	method image()="assets/zombie" + numero.toString() + ".png"
+	var seMueve=false
+	method image()="personajes/zombie" + numero.toString() + ".png"
 
 	method posicionInicial() = game.at(game.width()+1 , 1.randomUpTo(6))
 	//al principio estan en un lugar random entre las celdas 1 y 6
 	//un casillero la derecha para que no se vea
 	
 	method aparecer(){
-		position = self.posicionInicial()
-		game.onTick(1000,"moverZombie",{self.mover()})
+		game.onTick(1000,"moverZombie"+ self.identity().toString(),{self.mover()})
 	}
 	
 	method mover(){
+		seMueve=true
 		position = position.left(1) //muevo para izq un casillero
 		if (position.x() == 0){
 			juego.gameOver() //perdes cuando un zombie recorrio todo el tablero sin morir
 		}
-		
 		numero=3.min(numero+1) //para el movimiento
 		if (numero==3) numero=1 //loop
 	}
@@ -36,6 +35,24 @@ class Zombie{
 	method estaVivo()= position != self.posicionInicial() //esta vivo si está al principio
 	
 	method desaparecer(){
-		game.removeTickEvent("moverZombie") //deja de moverse
-		position = self.posicionInicial()} //desaparece
+		if (seMueve) {
+			game.removeTickEvent("moverZombie"+ self.identity().toString())
+			seMueve=false
+			}
+		game.removeVisual(self)
+		}
+		} 
+
+class ZombieEnojado inherits Zombie{
+	var property vida =2
+	override method image()="personajes/zombieEnojado" + numero.toString() + ".png"
+	override method chocar(){
+		puntaje.subirPuntaje(40) //ganas puntos
+		vida-=1
+		if (! self.estaVivo()){
+			self.desaparecer()
+			vida=2
+			}
+		}
+	override method estaVivo()= vida!=0
 }

@@ -7,8 +7,7 @@ object juego{
 	var position=self.posicionInicial()
 	const zombies=[]
 	const papita=new Papita()
-	
-	method image()="assets/fondoJuego.png"
+	method image()="fondos/fondoJuego.png"
 	method position() = position
 	
 	method posicionInicial()=game.at(game.width(),game.height()) //para que no se vea
@@ -29,31 +28,46 @@ object juego{
 		game.addVisual(reloj)
 		game.addVisual(puntaje)
 		reloj.iniciar()
-		game.onTick(5000,"aparecerZombies",{self.crearZombies(1)})
-		game.onTick(30000,"aparecerPapitasViolentas",{papitaViolenta.aparecer()})
+		game.onTick(5000,"crearZombies",{self.crearZombies()})
+		game.schedule(30000,{papitaViolenta.aparecer()})
+		game.schedule(35000,{self.crearZombiesEnojados()})
 		papita.aparecer()
-		papita.configurarTecla()
-		papitaViolenta.configurarTecla()
+		keyboard.space().onPressDo{papita.rodar()} //si se aprieta espacio rueda la papa
+		keyboard.a().onPressDo{papitaViolenta.rodar()} //si se aprieta a rueda la papaViolenta
 		keyboard.shift().onPressDo{=>juegoMenu.volverAlMenu()}	
 	}
 	
-	method crearZombies(cantidad){
-		var nuevo
-		cantidad.times{x => nuevo= new Zombie()
-			zombies.add(nuevo)
-			game.addVisual(nuevo)
-			nuevo.aparecer()}
-		game.onCollideDo(nuevo,{ papitaCualquiera => papitaCualquiera.chocar(nuevo)})
-	}
+	method crearZombies(){
+		const nuevo= new Zombie()
+		zombies.add(nuevo)
+		game.addVisual(nuevo)
+		nuevo.aparecer()
+		game.onCollideDo(nuevo,{ papitaCualquiera => papitaCualquiera.chocar(nuevo)
+								game.sound("musica/bowling.mp3").play()
+		})
+		}
+
 	
+	method crearZombiesEnojados(){
+		game.onTick(8000,"aparecerZombiesEnojados",{self.zombiesEnojados()})
+	}
+	method zombiesEnojados(){
+		const nuevo= new ZombieEnojado()
+		zombies.add(nuevo)
+		game.addVisual(nuevo)
+		nuevo.aparecer()
+		game.onCollideDo(nuevo,{ papitaCualquiera => papitaCualquiera.chocar(nuevo)})
+		}
+		
 	method gameOver(){
 		game.addVisual(gameOver)
 		game.removeVisual(papita)
 		game.removeVisual(papitaViolenta)
 		reloj.detener()
-		zombies.forEach{zombie=>zombie.desaparecer()} //borra todos los zombies que ya estaban 
 		game.removeTickEvent("aparecerZombies") //para que dejen de aparecer
+		zombies.forEach{zombie=>game.removeVisual(zombie)} //borra todos los zombies que ya estaban 
 	}
+	
 	method parar(){
 		position=self.posicionInicial()
 		papita.desaparecer()

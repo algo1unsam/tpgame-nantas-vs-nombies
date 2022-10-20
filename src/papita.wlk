@@ -3,30 +3,32 @@ import wollok.game.*
 class Papita{
 	var numero=1
 	var property position=self.posicionInicial()
+	var property estaBajando=false
 	
-	method image()="assets/papita" + numero.toString() + ".png"
-
+	method image()="personajes/papita" + numero.toString() + ".png"
 	method posicionInicial() = game.at(2.randomUpTo(4), game.height()+1)
 	//la papita aparece en un lugar random entre las celdas 2 y 4 
 	//un casillero arriba para que no se vea
 	
 	method aparecer(){
 		position = self.posicionInicial()
-		game.onTick(300,"moverPapita",{self.mover()})
-		//cada 300 milisegundos se mueve la papita
+		self.bajarPapita()
 	}
+	method bajarPapita(){game.onTick(300,"bajarPapita",{self.bajar()})} //cada 300 milisegundos se mueve la papita
 	
-	method mover(){
+	method bajar(){
+		estaBajando=true
 		position = position.down(1) //muevo para abajo un casillero
 		if (position.y() == -1)//si se fue del cuadro vuelvo a la pos inicial
 			position = self.posicionInicial()
 	}
 	
-	method configurarTecla(){keyboard.space().onPressDo{self.rodar()}} //si se aprieta espacio rueda
-	
 	method rodar(){
-		game.removeTickEvent("moverPapita")
-		game.onTick(200,"girarPapita",{self.girar()})
+		if (estaBajando) {
+			self.dejarDeBajar()}
+		self.girarPapita()
+	}
+	method girarPapita(){game.onTick(350,"girarPapita",{self.girar()})
 	}
 	
 	method girar(){
@@ -35,10 +37,8 @@ class Papita{
 		
 		position=position.right(1) //muevo uno a la derecha
 		
-		if (position.x() > game.width()){ //si desaparece de la pantalla deja de girar y vuelve a aparecer
-			game.removeTickEvent("girarPapita")
-			numero=1
-			self.aparecer()
+		if (position.x() > game.width() ){ //si desaparece de la pantalla deja de girar y vuelve a aparecer
+			self.borrar()
 			}
 		}
 		
@@ -48,45 +48,51 @@ class Papita{
 	}
 	
 	method borrar(){
-		game.removeTickEvent("girarPapita")
+		self.dejarDeGirar()
 		numero=1
 		self.aparecer()
 	}
 	
 	method desaparecer(){
-		game.removeTickEvent("moverPapita")
+		if (estaBajando) self.dejarDeBajar()
+		else self.dejarDeGirar()
 		position = self.posicionInicial() //para que no se vea cuando termina el juego
 	}
 	
 	method chocar(){} //si se chocan las papitas entre si no para nada
+	
+	method dejarDeGirar(){game.removeTickEvent("girarPapita")}
+	method dejarDeBajar(){game.removeTickEvent("bajarPapita")
+						estaBajando=false}
+	
 }
 
-object papitaViolenta inherits Papita{
+object papitaViolenta inherits Papita{//para que me deje inicializar otraPapa en el archivo juego
 	var diagonal=false
 	
-	override method image()="assets/papitaEnojada" + numero.toString() + ".png"
-	
+	override method image()="personajes/papitaEnojada" + numero.toString() + ".png"
 	override method posicionInicial() = game.at(1, game.height()+1)
+	override method girarPapita(){game.onTick(200,"girarPapitaViolenta",{self.girar()})}
+	override method bajarPapita(){game.onTick(300,"bajarPapitaViolenta",{self.bajar()})}
 	
 	override method chocar(contraQuien){
 		contraQuien.chocar()
-		if (contraQuien.estaVivo()){ //si no mató al zombie rebota
-			game.onTick(300,"moverPapitaDiagonal",{self.diagonal()
-													diagonal=true
-			})
-			}
-		else{self.borrar()}
+		game.onTick(200,"moverPapitaDiagonal",{self.diagonal()
+													diagonal=true})
 	}
 	
 	override method aparecer(){
 		if (diagonal){
 			game.removeTickEvent("moverPapitaDiagonal")
-			super()
-		}
-		else {super()}
+			diagonal=false
+			}
+		super()
 	}
-	override method configurarTecla(){keyboard.a().onPressDo{self.rodar()}} //si se aprieta espacio rueda
-	method diagonal()=[position=position.left(1),position=position.right(1)].anyOne()
+	
+	method diagonal()=[position=position.up(1),position=position.down(1)].anyOne()
+	
+	override method dejarDeGirar(){game.removeTickEvent("girarPapitaViolenta")}
+	override method dejarDeBajar(){game.removeTickEvent("bajarPapitaViolenta")}
 }
 
 
