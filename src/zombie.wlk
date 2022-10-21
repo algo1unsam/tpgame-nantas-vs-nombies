@@ -30,6 +30,7 @@ class Zombie {
 	}
 
 	method chocar() {
+		
 		vida -= 1
 		self.desaparecer()
 		puntaje.subirPuntaje(30)

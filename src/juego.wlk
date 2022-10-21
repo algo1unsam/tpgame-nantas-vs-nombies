@@ -43,6 +43,7 @@ object juego {
 	}
 
 	method crearZombies() {
+		
 		const nuevo = new Zombie(vida = 1)
 		zombies.add(nuevo)
 		game.addVisual(nuevo)

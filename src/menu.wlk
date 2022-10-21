@@ -58,6 +58,7 @@ object flecha {
 	method image() = "fondos/flecha.png"
 
 	method subir() {
+		
 		numero = 2.min(numero + 1)
 	}
 

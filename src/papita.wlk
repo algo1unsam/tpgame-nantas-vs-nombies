@@ -38,6 +38,7 @@ class Papita {
 	}
 
 	method girarPapita() {
+		
 		game.onTick(350, "girarPapita", { self.girar()})
 		estaRodando=true
 	}
