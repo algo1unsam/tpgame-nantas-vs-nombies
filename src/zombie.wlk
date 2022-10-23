@@ -16,7 +16,7 @@ class Zombie {
 	// al principio estan en un lugar random entre las celdas 1 y 6
 	// un casillero la derecha para que no se vea
 	method aparecer() {
-		game.onTick(1000, "moverZombie" + self.identity().toString(), { self.mover()})
+		game.onTick(1000, "moverZombie" , { self.mover()})
 	}
 
 	method mover() {
@@ -25,12 +25,11 @@ class Zombie {
 		if (position.x() == 0) {
 			juego.gameOver() // perdes cuando un zombie recorrio todo el tablero sin morir
 		}
-		numero = 3.min(numero + 1) // para el movimiento
-		if (numero == 3) numero = 1 // loop
+		numero = 4.min(numero + 1) // para el movimiento
+		if (numero == 4) numero = 1 // loop
 	}
 
 	method chocar() {
-		
 		vida -= 1
 		self.desaparecer()
 		puntaje.subirPuntaje(30)
@@ -43,10 +42,10 @@ class Zombie {
 
 	method desaparecer() {
 		if (seMueve) {
-			game.removeTickEvent("moverZombie" + self.identity().toString())
+			game.removeTickEvent("moverZombie")
 			seMueve = false
 		}
-		
+		juego.zombies().remove(self)
 		game.removeVisual(self)
 	}
 

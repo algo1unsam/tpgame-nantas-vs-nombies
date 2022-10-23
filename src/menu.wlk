@@ -13,15 +13,14 @@ object juegoMenu {
 		keyboard.up().onPressDo{ flecha.subir()}
 		keyboard.down().onPressDo{ flecha.bajar()}
 		keyboard.enter().onPressDo{ self.cambiar(flecha.opcion())} // abre la opcion del menu en el que está parada la flecha
-		keyboard.backspace().onPressDo{ game.stop()}
 	}
 
 	method empezar() {
 		self.configurar()
 		musicaMenu.shouldLoop(true)
-		musicaOpciones.shouldLoop(true)
+//		musicaOpciones.shouldLoop(true)
 		game.schedule(500, { musicaMenu.play()})
-		game.schedule(0, { musicaOpciones.play()
+		game.schedule(1, { musicaOpciones.play()
 			musicaOpciones.pause()
 		}) // empieza y pausa la musica de las opciones para poder usar resume
 	}
@@ -58,7 +57,6 @@ object flecha {
 	method image() = "fondos/flecha.png"
 
 	method subir() {
-		
 		numero = 2.min(numero + 1)
 	}
 

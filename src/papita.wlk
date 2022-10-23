@@ -5,7 +5,7 @@ class Papita {
 	var numero = 1
 	var property position = self.posicionInicial()
 	var property estaBajando = false
-	var property estaRodando=false
+	var property estaRodando = false
 
 	method image() = "personajes/papita" + numero.toString() + ".png"
 
@@ -33,14 +33,12 @@ class Papita {
 		if (estaBajando) {
 			self.dejarDeBajar()
 		}
-		if (!estaRodando)
-			self.girarPapita()
+		if (!estaRodando) self.girarPapita()
 	}
 
 	method girarPapita() {
-		
-		game.onTick(350, "girarPapita", { self.girar()})
-		estaRodando=true
+		game.onTick(300, "girarPapita", { self.girar()})
+		estaRodando = true
 	}
 
 	method girar() {
@@ -73,28 +71,30 @@ class Papita {
 	} // si se chocan las papitas entre si no para nada
 
 	method dejarDeGirar() {
-		if (estaRodando){
+		if (estaRodando) {
 			game.removeTickEvent("girarPapita")
-			estaRodando=false}
+			estaRodando = false
+		}
 	}
 
 	method dejarDeBajar() {
-		if (estaBajando){
+		if (estaBajando) {
 			game.removeTickEvent("bajarPapita")
-			estaBajando = false}
+			estaBajando = false
+		}
 	}
 
 }
 
-object papitaViolenta inherits Papita { //para que me deje inicializar otraPapa en el archivo juego
+object papitaViolenta inherits Papita {
 
 	override method image() = "personajes/papitaEnojada" + numero.toString() + ".png"
 
 	override method posicionInicial() = game.at(1, game.height() + 1)
 
 	override method girarPapita() {
-		game.onTick(200, "girarPapitaViolenta", { self.girar()})
-		estaRodando=true
+		game.onTick(300, "girarPapitaViolenta", { self.girar()})
+		estaRodando = true
 	}
 
 	override method bajarPapita() {
@@ -109,13 +109,17 @@ object papitaViolenta inherits Papita { //para que me deje inicializar otraPapa 
 	}
 
 	override method dejarDeGirar() {
-		estaRodando=false
-		game.removeTickEvent("girarPapitaViolenta")
+		if (estaRodando) {
+			game.removeTickEvent("girarPapitaViolenta")
+			estaRodando = false
+		}
 	}
 
 	override method dejarDeBajar() {
-		game.removeTickEvent("bajarPapitaViolenta")
-		estaBajando=false
+		if (estaBajando) {
+			game.removeTickEvent("bajarPapitaViolenta")
+			estaBajando = false
+		}
 	}
 
 }
