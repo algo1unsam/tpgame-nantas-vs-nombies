@@ -1,33 +1,29 @@
 import wollok.game.*
 import papita.*
-import menu.* //para la clase OpcionesMenu
+import menu.*
 import zombie.*
 
 object juego {
 
-	var position = self.posicionInicial()
-	const zombies = []
+	var property position = self.posicionInicial()
+	var property zombies = []
 	const papita = new Papita()
+	var hayZombiesEnojados = false
 
-	var hayZombiesEnojados=false
 	method image() = "fondos/fondoJuego.png"
-
-	method position() = position
 
 	method posicionInicial() = game.at(game.width(), game.height()) // para que no se vea
 
 	method iniciar() {
 		position = game.origin()
-		game.addVisual(reloj)
+		game.addVisual(enter)
 		keyboard.enter().onPressDo{ self.empezarJuego()}
-	// agregar algun cartel que diga "presione enter para iniciar" o algo asi
 	}
 
 	method empezarJuego() {
 		game.clear()
 		position = game.origin()
 		game.addVisual(self)
-			// por si aprietan enter mientras juegan
 		game.addVisual(papita)
 		game.addVisual(papitaViolenta)
 		game.addVisual(reloj)
@@ -35,7 +31,7 @@ object juego {
 		reloj.iniciar()
 		game.onTick(5000, "crearZombies", { self.crearZombies()})
 		game.schedule(30000, { papitaViolenta.aparecer()})
-		if (!hayZombiesEnojados) game.schedule(35000, { self.aparecerZombiesEnojados()})
+		if (!hayZombiesEnojados) game.onTick(35000,"crearZombiesEnojados", { self.aparecerZombiesEnojados() })
 		papita.aparecer()
 		keyboard.space().onPressDo{ papita.rodar()} // si se aprieta espacio rueda la papa
 		keyboard.a().onPressDo{ papitaViolenta.rodar()} // si se aprieta a rueda la papaViolenta
@@ -43,7 +39,6 @@ object juego {
 	}
 
 	method crearZombies() {
-		
 		const nuevo = new Zombie(vida = 1)
 		zombies.add(nuevo)
 		game.addVisual(nuevo)
@@ -51,12 +46,12 @@ object juego {
 		game.onCollideDo(nuevo, { papitaCualquiera =>
 			papitaCualquiera.chocar(nuevo)
 			game.sound("musica/bowling.mp3").play()
-			if (! nuevo.estaVivo()) zombies.remove(nuevo)
+			if (!nuevo.estaVivo()) zombies.remove(nuevo)
 		})
 	}
 
 	method aparecerZombiesEnojados() {
-		hayZombiesEnojados=true
+		hayZombiesEnojados = true
 		game.onTick(8000, "aparecerZombiesEnojados", { self.crearZombiesEnojados()})
 	}
 
@@ -68,9 +63,7 @@ object juego {
 		game.onCollideDo(nuevo, { papitaCualquiera =>
 			papitaCualquiera.chocar(nuevo)
 			game.sound("musica/bowling.mp3").play()
-			if (! nuevo.estaVivo()) zombies.remove(nuevo)
-		})
-		
+			if (!nuevo.estaVivo()) zombies.remove(nuevo)})
 	}
 
 	method gameOver() {
@@ -78,11 +71,12 @@ object juego {
 		game.removeVisual(papita)
 		game.removeVisual(papitaViolenta)
 		reloj.detener()
-		zombies.forEach{ zombie => game.removeVisual(zombie)} // borra todos los zombies que ya estaban 
 		game.removeTickEvent("crearZombies") // para que dejen de aparecer
-		if (hayZombiesEnojados){
-			game.removeTickEvent("aparecerZombiesEnojados")}
-		else hayZombiesEnojados = false
+		if (hayZombiesEnojados) { //por si se pierde antes de que empiecen a aparecer los enojados
+			game.removeTickEvent("crearZombiesEnojados")
+			game.removeTickEvent("aparecerZombiesEnojados")
+		} else hayZombiesEnojados = true
+		zombies.forEach{ zombie => zombie.desaparecer()} // borra todos los zombies que estan 
 	}
 
 	method parar() {
@@ -95,11 +89,9 @@ object juego {
 
 object gameOver {
 
-	method position() = game.center()
+	method position() = game.at(4, 2)
 
-	method text() = "GAME OVER"
-
-	method textColor() = "#ffffff"
+	method image()= "fondos/gameOver.png"
 
 }
 
@@ -126,9 +118,6 @@ object reloj {
 		game.removeTickEvent("tiempo")
 	}
 
-	method chocar(aQuien) {
-	}
-
 }
 
 object puntaje {
@@ -145,8 +134,15 @@ object puntaje {
 		puntaje += cantidad
 	}
 
-	method chocar(aQuien) {
-	}
+}
+
+object enter {
+
+	method text() = "Presione enter para comenzar a jugar"
+
+	method textColor() = "#ffffff"
+
+	method position() = game.center()
 
 }
 

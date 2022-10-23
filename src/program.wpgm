@@ -3,12 +3,10 @@ import menu.*
 
 program niamplasVsNiombies {
 	// El juego tiene un tamaño de 1440x880
-
 	game.width(14)
 	game.height(8)
 	game.cellSize(110)
-	game.title("Niantas vs niombies")
+	game.title("Niantas vs Niombzies")
 	juegoMenu.empezar()
 	game.start()
-	
 }
