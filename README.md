@@ -1,6 +1,6 @@
 # Niantas vs Niombies
 
-![](https://i.postimg.cc/y8ZH5chg/mainMenu.png)
+![]([https://i.postimg.cc/y8ZH5chg/mainMenu.png](https://github.com/algo1unsam/tpgame-nantas-vs-nombies/blob/master/assets/fondos/menu.png?raw=true))
 
 
 ## Idea General
@@ -8,7 +8,7 @@ Tu objetivo es proteger tu casa de la terrible horda de zombies come cerebros qu
 
 ## Instrucciones
 
-![](https://i.ibb.co/ZM20G84/instrucciones-FINAL.png)
+![]([https://i.ibb.co/ZM20G84/instrucciones-FINAL.png](https://github.com/algo1unsam/tpgame-nantas-vs-nombies/blob/master/assets/fondos/instrucciones.png?raw=true))
 
 
 ## NaruTeam
