@@ -1,24 +1,26 @@
-# niantas vs niombies
+# Niantas vs Niombies
 
-## Equipo de desarrollo
+![](https://i.ibb.co/zQMfC0j/MainMenu.png)
 
+
+## Idea General
+Tu objetivo es proteger tu casa de la terrible horda de zombies come cerebros que se avecina a tu morada durante el mayor tiempo posible. Para protegerte contas con una serie de tuberculos muy simpaticos para hacerles frente. Pero tené cuidado!! Algunos zombies son mas dificiles de matar que los otros. 
+
+## Instrucciones
+
+![](https://i.ibb.co/ZM20G84/instrucciones-FINAL.png)
+
+
+## NaruTeam
 - Rodriguez Micaela
 - Pagano Annabella
-- Gibelli Julian
+- Gibelli Julian  
 
-## Capturas
-
-(agregar)
-
-## Reglas de Juego / Instrucciones
-
-(Escribirlas)
+Algoritmos I - 2do cuatrimestre 2022
+TPI
+UNSAM 
 
 
-## Otros
 
-- Curso/Facultad
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
 
-##probando hacer merge desde la terminal 
+
