@@ -43,22 +43,15 @@ class Zombie {
 	
 	
 	method desaparecer() {
-        if (seMueve) {
+        //if (seMueve) {
             game.removeTickEvent("moverZombie"+ self.toString())
       		seMueve = false
-      }
+      //}
         juego.zombies().remove(self)
         game.removeVisual(self)
     } 
 
-//	method desaparecer() {
-//		if (seMueve) {
-//			game.removeTickEvent("moverZombie")
-//			seMueve = false
-//		}
-//		juego.zombies().remove(self)
-//		game.removeVisual(self)
-//	}
+
 
 }
 

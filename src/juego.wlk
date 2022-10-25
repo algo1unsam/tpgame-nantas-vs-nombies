@@ -9,7 +9,6 @@ object juego {
 	var property zombies = []
 	const papita = new Papita()
 	var hayZombiesEnojados = false
-	
 
 	method image() = "fondos/fondoJuego.png"
 
@@ -32,10 +31,9 @@ object juego {
 		reloj.iniciar()
 		game.onTick(5000, "crearZombies", { self.crearZombies()})
 		game.schedule(30000, { papitaViolenta.aparecer()})
-		if (!hayZombiesEnojados) game.onTick(35000,"crearZombiesEnojados", { self.aparecerZombiesEnojados() })
-		//game.onTick(35000,"crearZombiesEnojados", { self.aparecerZombiesEnojados() })
+		if (!hayZombiesEnojados) game.onTick(35000, "crearZombiesEnojados", { self.aparecerZombiesEnojados() })
 		papita.aparecer()
-		keyboard.space().onPressDo{ papita.rodar()} // si se aprieta espacio rueda la papa
+		keyboard.d().onPressDo{ papita.rodar()} // si se aprieta espacio rueda la papa
 		keyboard.a().onPressDo{ papitaViolenta.rodar()} // si se aprieta a rueda la papaViolenta
 		keyboard.shift().onPressDo{=> juegoMenu.volverAlMenu()}
 	}
@@ -65,46 +63,25 @@ object juego {
 		game.onCollideDo(nuevo, { papitaCualquiera =>
 			papitaCualquiera.chocar(nuevo)
 			game.sound("musica/bowling.mp3").play()
-			if (!nuevo.estaVivo()) zombies.remove(nuevo)})
+			if (!nuevo.estaVivo()) zombies.remove(nuevo)
+		})
 	}
 
-//	method gameOver() {
-//		game.addVisual(gameOver)
-//		game.removeVisual(papita)
-//		game.removeVisual(papitaViolenta)
-//		reloj.detener()
-//		game.removeTickEvent("crearZombies")
-//		game.removeTickEvent("crearZombiesEnojados") // para que dejen de aparecer
-//		if (hayZombiesEnojados) { //por si se pierde antes de que empiecen a aparecer los enojados
-//			game.removeTickEvent("crearZombiesEnojados")
-//			game.removeTickEvent("aparecerZombiesEnojados")
-//		} else hayZombiesEnojados = true
-//		zombies.forEach{ zombie => zombie.desaparecer()} // borra todos los zombies que estan 
-//	}
+	method gameOver() {
+		
+		if (hayZombiesEnojados) { // por si se pierde antes de que empiecen a aparecer los enojados
+			game.removeTickEvent("crearZombiesEnojados")
+			game.removeTickEvent("aparecerZombiesEnojados")
+		} else hayZombiesEnojados = true 
+		game.addVisual(gameOver)
+		game.removeVisual(papita)
+		game.removeVisual(papitaViolenta)
+		reloj.detener()
+		game.removeTickEvent("crearZombies") // para que dejen de aparecer
+		game.schedule(5000, {game.stop()})
+		zombies.forEach{ zombie => zombie.desaparecer()} // borra todos los zombies que estan 
 
- method gameOver() {
-  		// game.clear()
-        game.addVisual(gameOver)
-        game.removeVisual(papita)
-        game.removeVisual(papitaViolenta)
-        reloj.detener()
-     game.removeTickEvent("crearZombies") // para que dejen de aparecer
-        
-      game.removeTickEvent("bajarPapitaViolenta")
-        game.removeTickEvent("bajarPapita")
-//      if (hayZombiesEnojados) { //por si se pierde antes de que empiecen a aparecer los enojados
-//          	game.removeTickEvent("crearZombiesEnojados")
-//   } 
-//   
-   if (reloj.tiempo()>35000){
-   	game.removeTickEvent("crearZombiesEnojados")
-   	game.removeTickEvent("aparecerZombiesEnojados")
-   	
-   }
-    zombies.forEach{ zombie => zombie.desaparecer()} // borra todos los zombies que estan 
-    game.schedule(3500,{game.stop()})
-    } 
-    
+	}
 
 	method parar() {
 		position = self.posicionInicial()
@@ -118,7 +95,7 @@ object gameOver {
 
 	method position() = game.at(4, 2)
 
-	method image()= "fondos/gameOver.png"
+	method image() = "fondos/gameOver.png"
 
 }
 
