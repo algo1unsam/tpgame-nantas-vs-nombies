@@ -1,6 +1,6 @@
 # Niantas vs Niombies
 
-![](https://i.ibb.co/zQMfC0j/MainMenu.png)
+![](https://i.postimg.cc/y8ZH5chg/mainMenu.png)
 
 
 ## Idea General
