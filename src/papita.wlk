@@ -107,6 +107,5 @@ object papitaViolenta inherits Papita {
 		} else contraQuien.chocar()
 	}
 
-
 }
 

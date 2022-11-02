@@ -3,7 +3,7 @@ import juego.*
 import papita.*
 
 object juegoMenu {
-	
+
 	const musicaMenu = game.sound("musica/plantsVsZombiesMainMenu.mp3")
 	const property musicaOpciones = game.sound("musica/mainGame.mp3")
 
