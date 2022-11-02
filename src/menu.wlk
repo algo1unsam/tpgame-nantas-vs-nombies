@@ -3,9 +3,9 @@ import juego.*
 import papita.*
 
 object juegoMenu {
-
+	
 	const musicaMenu = game.sound("musica/plantsVsZombiesMainMenu.mp3")
-	const musicaOpciones = game.sound("musica/mainGame.mp3")
+	const property musicaOpciones = game.sound("musica/mainGame.mp3")
 
 	method configurar() {
 		game.boardGround("fondos/menu.png")
@@ -18,7 +18,7 @@ object juegoMenu {
 	method empezar() {
 		self.configurar()
 		musicaMenu.shouldLoop(true)
-//		musicaOpciones.shouldLoop(true)
+		musicaOpciones.shouldLoop(true)
 		game.schedule(500, { musicaMenu.play()})
 		game.schedule(1, { musicaOpciones.play()
 			musicaOpciones.pause()
