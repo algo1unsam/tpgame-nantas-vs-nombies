@@ -15,11 +15,11 @@ class Papita {
 	// un casillero arriba para que no se vea
 	method aparecer() {
 		position = self.posicionInicial()
-		self.bajarPapita()
+		self.bajarPapita(self.tickBajar())
 	}
 
-	method bajarPapita() {
-		game.onTick(300, "bajarPapita", { self.bajar()})
+	method bajarPapita(tick) {
+		game.onTick(300, tick, { self.bajar()})
 	} // cada 300 milisegundos se mueve la papita
 
 	method bajar() {
@@ -33,11 +33,15 @@ class Papita {
 		if (estaBajando) {
 			self.dejarDeBajar()
 		}
-		if (!estaRodando) self.girarPapita()
+		if (!estaRodando) self.girarPapita(self.tickGirar())
 	}
 
-	method girarPapita() {
-		game.onTick(300, "girarPapita", { self.girar()})
+	method tickGirar() = "girarPapita"
+
+	method tickBajar() = "bajarPapita"
+
+	method girarPapita(tick) {
+		game.onTick(300, tick, { self.girar()})
 		estaRodando = true
 	}
 
@@ -72,14 +76,14 @@ class Papita {
 
 	method dejarDeGirar() {
 		if (estaRodando) {
-			game.removeTickEvent("girarPapita")
+			game.removeTickEvent(self.tickGirar())
 			estaRodando = false
 		}
 	}
 
 	method dejarDeBajar() {
 		if (estaBajando) {
-			game.removeTickEvent("bajarPapita")
+			game.removeTickEvent(self.tickBajar())
 			estaBajando = false
 		}
 	}
@@ -92,14 +96,9 @@ object papitaViolenta inherits Papita {
 
 	override method posicionInicial() = game.at(1, game.height() + 1)
 
-	override method girarPapita() {
-		game.onTick(300, "girarPapitaViolenta", { self.girar()})
-		estaRodando = true
-	}
+	override method tickGirar() = "girarPapitaViolenta"
 
-	override method bajarPapita() {
-		game.onTick(300, "bajarPapitaViolenta", { self.bajar()})
-	}
+	override method tickBajar() = "bajarPapitaViolenta"
 
 	override method chocar(contraQuien) {
 		if (contraQuien.vida() == 2) {
@@ -108,19 +107,6 @@ object papitaViolenta inherits Papita {
 		} else contraQuien.chocar()
 	}
 
-	override method dejarDeGirar() {
-		if (estaRodando) {
-			game.removeTickEvent("girarPapitaViolenta")
-			estaRodando = false
-		}
-	}
-
-	override method dejarDeBajar() {
-		if (estaBajando) {
-			game.removeTickEvent("bajarPapitaViolenta")
-			estaBajando = false
-		}
-	}
 
 }
 

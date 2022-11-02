@@ -30,24 +30,28 @@ object juego {
 		game.addVisual(puntaje)
 		reloj.iniciar()
 		game.onTick(5000, "crearZombies", { self.crearZombies()})
-		game.schedule(30000, { papitaViolenta.aparecer()})
+		game.schedule(30000, { papitaViolenta.aparecer()
+			keyboard.a().onPressDo{ papitaViolenta.rodar()} // si se aprieta a rueda la papaViolenta
+		})
 		if (!hayZombiesEnojados) game.onTick(35000, "crearZombiesEnojados", { self.aparecerZombiesEnojados() })
 		papita.aparecer()
 		keyboard.d().onPressDo{ papita.rodar()} // si se aprieta espacio rueda la papa
-		keyboard.a().onPressDo{ papitaViolenta.rodar()} // si se aprieta a rueda la papaViolenta
 		keyboard.shift().onPressDo{=> juegoMenu.volverAlMenu()}
+	}
+
+	method configuracionZombie(zombie) {
+		zombies.add(zombie)
+		game.addVisual(zombie)
+		zombie.aparecer()
+		game.onCollideDo(zombie, { papitaCualquiera =>
+			papitaCualquiera.chocar(zombie)
+			game.sound("musica/bowling.mp3").play()
+		})
 	}
 
 	method crearZombies() {
 		const nuevo = new Zombie(vida = 1)
-		zombies.add(nuevo)
-		game.addVisual(nuevo)
-		nuevo.aparecer()
-		game.onCollideDo(nuevo, { papitaCualquiera =>
-			papitaCualquiera.chocar(nuevo)
-			game.sound("musica/bowling.mp3").play()
-			if (!nuevo.estaVivo()) zombies.remove(nuevo)
-		})
+		self.configuracionZombie(nuevo)
 	}
 
 	method aparecerZombiesEnojados() {
@@ -57,30 +61,23 @@ object juego {
 
 	method crearZombiesEnojados() {
 		const nuevo = new ZombieEnojado(vida = 2)
-		zombies.add(nuevo)
-		game.addVisual(nuevo)
-		nuevo.aparecer()
-		game.onCollideDo(nuevo, { papitaCualquiera =>
-			papitaCualquiera.chocar(nuevo)
-			game.sound("musica/bowling.mp3").play()
-			if (!nuevo.estaVivo()) zombies.remove(nuevo)
-		})
+		self.configuracionZombie(nuevo)
 	}
 
 	method gameOver() {
-		
+		juegoMenu.musicaOpciones().pause()
+		game.sound("musica/gameOver.mp3").play()
 		if (hayZombiesEnojados) { // por si se pierde antes de que empiecen a aparecer los enojados
 			game.removeTickEvent("crearZombiesEnojados")
 			game.removeTickEvent("aparecerZombiesEnojados")
-		} else hayZombiesEnojados = true 
+		} else hayZombiesEnojados = true
 		game.addVisual(gameOver)
 		game.removeVisual(papita)
 		game.removeVisual(papitaViolenta)
 		reloj.detener()
 		game.removeTickEvent("crearZombies") // para que dejen de aparecer
-		game.schedule(5000, {game.stop()})
+		game.schedule(5000, { game.stop()})
 		zombies.forEach{ zombie => zombie.desaparecer()} // borra todos los zombies que estan 
-
 	}
 
 	method parar() {
